@@ -5,6 +5,7 @@ public class StoreImpl implements Store{
     private String name;
     public StoreImpl(String name) {
         this.name = name;
+
     }
     @Override
     public String getName() {
