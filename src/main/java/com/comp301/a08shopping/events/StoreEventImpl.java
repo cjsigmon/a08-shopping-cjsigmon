@@ -21,4 +21,5 @@ public class StoreEventImpl implements StoreEvent {
   public Store getStore() {
     return store;
   }
+
 }
