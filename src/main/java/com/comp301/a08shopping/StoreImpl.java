@@ -55,10 +55,13 @@ public class StoreImpl implements Store{
         if (product == null) {
             throw new IllegalArgumentException();
         }
+        if(!(products.contains(product))) {
+            throw new ProductNotFoundException();
+        }
         if (((ProductImpl)product).getInStock()) {
             throw new OutOfStockException();
         }
-        validateProduct(product);
+
 
         ReceiptItemImpl receipt = new ReceiptItemImpl(product.getName(), ((ProductImpl)product).getDiscountedPrice(), getName());
         ((ProductImpl) product).setInventory(-1);
