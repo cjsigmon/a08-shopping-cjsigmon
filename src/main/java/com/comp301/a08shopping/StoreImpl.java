@@ -54,12 +54,7 @@ public class StoreImpl implements Store{
         PurchaseEvent purchase = new PurchaseEvent(product, this);
         notify(purchase);
 
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
-        if(!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
+        validateProduct(product);
         if (!((ProductImpl)product).getInStock()) {
             throw new OutOfStockException();
         }
@@ -144,13 +139,13 @@ public class StoreImpl implements Store{
         if (product == null) {
             throw new IllegalArgumentException();
         }
-//        boolean fails = true;
-//        for (Product pr : products) {
-//            if (pr.getName().equals(product.getName())) {
-//                fails = false;
-//            }
-//        }
-        if (!(products.contains(product))) {
+        boolean fails = true;
+        for (Product pr : products) {
+            if (pr.equals(product)) {
+                fails = false;
+            }
+        }
+        if (fails) {
             throw new ProductNotFoundException();
         }
     }
