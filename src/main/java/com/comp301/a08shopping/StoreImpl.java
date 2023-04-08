@@ -42,7 +42,7 @@ public class StoreImpl implements Store{
         return copy;
     }
     @Override public Product createProduct(String name, double basePrice, int inventory) {
-        if (name == null || basePrice <= 0.00 || inventory < 1) {
+        if (name == null || basePrice <= 0.00 || inventory < 0) {
             throw new IllegalArgumentException("inventory must be positive");
         }
         Product newProd = new ProductImpl(name, basePrice);
