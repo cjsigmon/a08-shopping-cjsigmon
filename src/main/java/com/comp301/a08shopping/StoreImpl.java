@@ -79,9 +79,11 @@ public class StoreImpl implements Store{
         return receipt;
     }
     @Override public void restockProduct(Product product, int numItems) {
-        validateProduct(product);
-        if (numItems < 0) {
+        if (numItems < 0 || product == null) {
             throw new IllegalArgumentException();
+        }
+        if (!(products.contains(product))) {
+            throw new ProductNotFoundException();
         }
         if (!getIsInStock(product)) {
             BackInStockEvent back = new BackInStockEvent(product, this);
