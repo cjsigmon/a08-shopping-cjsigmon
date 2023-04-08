@@ -39,6 +39,9 @@ public class CustomerImpl implements Customer {
 
     budget -= ((ProductImpl) product).getDiscountedPrice();
 
+    if (store == null) {
+      throw new IllegalStateException();
+    }
     ReceiptItem receipt = store.purchaseProduct(product);
 
     purchaseHistory.add(receipt);
