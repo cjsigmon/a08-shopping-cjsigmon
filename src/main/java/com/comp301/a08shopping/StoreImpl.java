@@ -20,18 +20,29 @@ public class StoreImpl implements Store{
     }
 
     @Override public void addObserver(StoreObserver observer) {
+        if (observer == null) {
+            throw new IllegalArgumentException();
+        }
         observers.add(observer);
     }
 
     @Override public void removeObserver(StoreObserver observer) {
+        if (observer == null) {
+            throw new IllegalArgumentException();
+        }
         observers.remove(observer);
     }
 
     @Override public List<Product> getProducts() {
-        return (List<Product>) ((ArrayList<Product>) products).clone();
+        ArrayList<Product> copy = new ArrayList<>();
+        for (Product prod : products) {
+            copy.add(prod);
+        }
+
+        return copy;
     }
     @Override public Product createProduct(String name, double basePrice, int inventory) {
-        if (inventory < 0) {
+        if (name == null || basePrice <= 0.00 || inventory < 1) {
             throw new IllegalArgumentException("inventory must be positive");
         }
         Product newProd = new ProductImpl(name, basePrice);
@@ -40,12 +51,7 @@ public class StoreImpl implements Store{
         return newProd;
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
+        validateProduct(product);
         if (((ProductImpl)product).getInventory() == 0) {
             throw new OutOfStockException();
         }
@@ -64,10 +70,8 @@ public class StoreImpl implements Store{
         return receipt;
     }
     @Override public void restockProduct(Product product, int numItems) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null || numItems < 0) {
+        validateProduct(product);
+        if (numItems < 0) {
             throw new IllegalArgumentException();
         }
         ((ProductImpl)product).setInventory(numItems);
@@ -77,10 +81,8 @@ public class StoreImpl implements Store{
         }
     }
     @Override public void startSale(Product product, double percentOff) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null || !(percentOff > 0.0 && percentOff < 1.0)) {
+        validateProduct(product);
+        if (!(percentOff > 0.0 && percentOff < 1.0)) {
             throw new IllegalArgumentException();
         }
         ((ProductImpl)product).setPercentOff(percentOff);
@@ -88,56 +90,46 @@ public class StoreImpl implements Store{
         notify(newSale);
     }
     @Override public void endSale(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
+        validateProduct(product);
         ((ProductImpl)product).setPercentOff(0);
         SaleEndEvent endEvent = new SaleEndEvent(product, this);
         notify(endEvent);
     }
     @Override public int getProductInventory(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
+        validateProduct(product);
         return ((ProductImpl)product).getInventory();
     }
     @Override public boolean getIsInStock(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
+        validateProduct(product);
         return ((ProductImpl)product).getInStock();
     }
     @Override public double getSalePrice(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
+        validateProduct(product);
         return ((ProductImpl)product).getDiscountedPrice();
     }
     @Override public boolean getIsOnSale(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
+        validateProduct(product);
         return ((ProductImpl)product).hasDiscount();
     }
 
     private void notify(StoreEventImpl storeEvent) {
         for (StoreObserver looker : observers) {
             looker.update(storeEvent);
+        }
+    }
+
+    private void validateProduct(Product product) {
+        if (product == null) {
+            throw new IllegalArgumentException();
+        }
+        boolean fails = true;
+        for (Product pr : products) {
+            if (pr.getName().equals(product.getName())) {
+                fails = false;
+            }
+        }
+        if (fails) {
+            throw new ProductNotFoundException();
         }
     }
 
