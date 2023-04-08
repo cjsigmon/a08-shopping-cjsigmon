@@ -34,12 +34,12 @@ public class StoreImpl implements Store{
         if (inventory < 0) {
             throw new IllegalArgumentException("inventory must be positive");
         }
-        ProductImpl newProd = new ProductImpl(name, basePrice);
-        newProd.setInventory(inventory);
+        Product newProd = new ProductImpl(name, basePrice);
+        ((ProductImpl)newProd).setInventory(inventory);
         return newProd;
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null) {
@@ -57,20 +57,20 @@ public class StoreImpl implements Store{
         return receipt;
     }
     @Override public void restockProduct(Product product, int numItems) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null || numItems < 0) {
             throw new IllegalArgumentException();
         }
+        ((ProductImpl)product).setInventory(numItems);
         if (!getIsInStock(product)) {
             BackInStockEvent back = new BackInStockEvent(product, this);
             notify(back);
         }
-        ((ProductImpl)product).setInventory(numItems);
     }
     @Override public void startSale(Product product, double percentOff) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null || !(percentOff > 0.0 && percentOff < 1.0)) {
@@ -81,7 +81,7 @@ public class StoreImpl implements Store{
         notify(newSale);
     }
     @Override public void endSale(Product product) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null) {
@@ -92,7 +92,7 @@ public class StoreImpl implements Store{
         notify(endEvent);
     }
     @Override public int getProductInventory(Product product) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null) {
@@ -101,7 +101,7 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getInventory();
     }
     @Override public boolean getIsInStock(Product product) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null) {
@@ -110,7 +110,7 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getInStock();
     }
     @Override public double getSalePrice(Product product) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null) {
@@ -119,7 +119,7 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getDiscountedPrice();
     }
     @Override public boolean getIsOnSale(Product product) {
-        if (!products.contains(product)) {
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
         if (product == null) {
