@@ -23,7 +23,7 @@ public class ProductImpl implements Product{
     return basePrice;
   }
 public void setInventory(int amount) {
-    inventory += amount;
+    inventory = inventory + amount;
 }
 
 public int getInventory() {

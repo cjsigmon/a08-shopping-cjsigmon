@@ -112,11 +112,11 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getInventory();
     }
     @Override public boolean getIsInStock(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
         if (product == null) {
             throw new IllegalArgumentException();
+        }
+        if (!(products.contains(product))) {
+            throw new ProductNotFoundException();
         }
         return ((ProductImpl)product).getInStock();
     }
@@ -125,11 +125,11 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getDiscountedPrice();
     }
     @Override public boolean getIsOnSale(Product product) {
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
         if (product == null) {
             throw new IllegalArgumentException();
+        }
+        if (!(products.contains(product))) {
+            throw new ProductNotFoundException();
         }
         return ((ProductImpl)product).hasDiscount();
     }
