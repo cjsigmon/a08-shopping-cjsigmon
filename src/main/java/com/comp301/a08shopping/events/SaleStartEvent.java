@@ -9,6 +9,6 @@ public class SaleStartEvent extends StoreEventImpl {
   }
   @Override
   public String getEventType() {
-    return "SaleStartEventEvent";
+    return "SaleStartEvent";
   }
 }
