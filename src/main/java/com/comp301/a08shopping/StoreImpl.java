@@ -51,10 +51,11 @@ public class StoreImpl implements Store{
         return newProd;
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
-        validateProduct(product);
-        if (((ProductImpl)product).getInventory() == 0) {
+
+        if (((ProductImpl)product).getInStock()) {
             throw new OutOfStockException();
         }
+        validateProduct(product);
 
         ReceiptItemImpl receipt = new ReceiptItemImpl(product.getName(), ((ProductImpl)product).getDiscountedPrice(), getName());
         ((ProductImpl) product).setInventory(-1);
