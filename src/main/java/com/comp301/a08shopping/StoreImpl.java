@@ -60,7 +60,7 @@ public class StoreImpl implements Store{
         if(!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
-        if (((ProductImpl)product).getInStock()) {
+        if (!((ProductImpl)product).getInStock()) {
             throw new OutOfStockException();
         }
 
@@ -118,7 +118,7 @@ public class StoreImpl implements Store{
         if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
-        return ((ProductImpl)product).getInStock();
+        return ((ProductImpl)product).getInventory() > 0;
     }
     @Override public double getSalePrice(Product product) {
         validateProduct(product);
