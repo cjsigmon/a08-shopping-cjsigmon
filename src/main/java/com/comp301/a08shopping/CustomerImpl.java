@@ -13,7 +13,7 @@ public class CustomerImpl implements Customer {
   private final List<ReceiptItem> purchaseHistory;
 
   public CustomerImpl(String name, double budget) {
-    if (name == null || budget < 0.00) {
+    if (name == null || budget < 0.01) {
       throw new IllegalArgumentException();
     }
     this.name = name;
@@ -33,22 +33,23 @@ public class CustomerImpl implements Customer {
 
   @Override
   public void purchaseProduct(Product product, Store store) {
-    if (product == null) {
-      throw new ProductNotFoundException();
-    }
+//    if (product == null) {
+//      throw new ProductNotFoundException();
+//    }
     if (((ProductImpl) product).getDiscountedPrice() > budget) {
       throw new IllegalStateException();
     }
-    if (store == null) {
-      throw new IllegalArgumentException();
-    }
-    if (!store.getProducts().contains(product)) {
-      throw new ProductNotFoundException();
-    }
+//    if (store == null) {
+//      throw new IllegalArgumentException();
+//    }
+//    if (!store.getProducts().contains(product)) {
+//      throw new ProductNotFoundException();
+//    }
 
-    budget -= ((ProductImpl) product).getDiscountedPrice();
+
 
     ReceiptItem receipt = store.purchaseProduct(product);
+    budget -= ((ProductImpl) product).getDiscountedPrice();
 
     purchaseHistory.add(receipt);
   }
