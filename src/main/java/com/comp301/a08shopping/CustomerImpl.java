@@ -26,7 +26,8 @@ public class CustomerImpl implements Customer{
     @Override
     public void purchaseProduct(Product product, Store store) {
         if (((ProductImpl)product).getDiscountedPrice() > budget) {
-            throw new IllegalStateException();
+//            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         }
         budget -= ((ProductImpl)product).getDiscountedPrice();
 
@@ -50,7 +51,7 @@ public class CustomerImpl implements Customer{
                 break;
 
             case "OutOfStockEvent":
-                System.out.println(event.getProduct().getName() + " is now of stock at "
+                System.out.println(event.getProduct().getName() + " is now out of stock at "
                         + event.getStore().getName());
                 break;
             case "PurchaseEvent":
