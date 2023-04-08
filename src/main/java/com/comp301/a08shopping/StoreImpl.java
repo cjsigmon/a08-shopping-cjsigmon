@@ -51,8 +51,6 @@ public class StoreImpl implements Store{
         return newProd;
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
-        PurchaseEvent purchase = new PurchaseEvent(product, this);
-        notify(purchase);
 
         validateProduct(product);
         if (!((ProductImpl)product).getInStock()) {
@@ -62,8 +60,8 @@ public class StoreImpl implements Store{
 
         ReceiptItemImpl receipt = new ReceiptItemImpl(product.getName(), ((ProductImpl)product).getDiscountedPrice(), getName());
         ((ProductImpl) product).setInventory(-1);
-//        PurchaseEvent purchase = new PurchaseEvent(product, this);
-//        notify(purchase);
+        PurchaseEvent purchase = new PurchaseEvent(product, this);
+        notify(purchase);
 
         if (((ProductImpl)product).getInventory() == 0) {
             products.remove(product);
