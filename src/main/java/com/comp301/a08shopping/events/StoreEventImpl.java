@@ -8,6 +8,9 @@ public class StoreEventImpl implements StoreEvent {
     private final Store store;
 
     public StoreEventImpl(Product product, Store store) {
+        if(product == null || store == null) {
+            throw new IllegalArgumentException("args cannot be null");
+        }
         this.product = product;
         this.store = store;
     }
