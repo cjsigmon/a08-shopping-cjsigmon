@@ -6,6 +6,9 @@ public class StoreImpl implements Store{
     private List<StoreObserver> observers;
     private List<Product> products;
     public StoreImpl(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException();
+        }
         this.name = name;
         observers = new ArrayList<>();
         products = new ArrayList<>();
