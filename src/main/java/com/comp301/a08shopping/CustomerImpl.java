@@ -31,12 +31,13 @@ public class CustomerImpl implements Customer {
 
   @Override
   public void purchaseProduct(Product product, Store store) {
-    if (product == null || store == null) {
-      throw new IllegalArgumentException();
-    }
     if (((ProductImpl) product).getDiscountedPrice() > budget) {
       throw new IllegalStateException();
     }
+    if (product == null || store == null) {
+      throw new IllegalArgumentException();
+    }
+
     budget -= ((ProductImpl) product).getDiscountedPrice();
 
     purchaseHistory.add(store.purchaseProduct(product));
