@@ -39,6 +39,9 @@ public class CustomerImpl implements Customer {
     if (((ProductImpl) product).getDiscountedPrice() > budget) {
       throw new IllegalStateException();
     }
+    if (store == null) {
+      throw new IllegalArgumentException();
+    }
 
     budget -= ((ProductImpl) product).getDiscountedPrice();
 
