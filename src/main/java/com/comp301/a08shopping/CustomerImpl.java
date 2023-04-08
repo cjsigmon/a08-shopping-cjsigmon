@@ -32,7 +32,7 @@ public class CustomerImpl implements Customer {
   @Override
   public void purchaseProduct(Product product, Store store) {
     if (((ProductImpl) product).getDiscountedPrice() > budget) {
-                  throw new IllegalStateException();
+      throw new IllegalStateException();
     }
     budget -= ((ProductImpl) product).getDiscountedPrice();
 
@@ -78,7 +78,11 @@ public class CustomerImpl implements Customer {
         break;
       case "SaleStartEvent":
         System.out.println(
-            "New sale for " + event.getProduct().getName() + " at " + event.getStore().getName() + "!");
+            "New sale for "
+                + event.getProduct().getName()
+                + " at "
+                + event.getStore().getName()
+                + "!");
         break;
     }
   }
