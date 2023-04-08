@@ -4,16 +4,16 @@ import com.comp301.a08shopping.Product;
 import com.comp301.a08shopping.Store;
 
 public class StoreEventImpl implements StoreEvent {
-    private final Product product;
-    private final Store store;
+  private final Product product;
+  private final Store store;
 
-    public StoreEventImpl(Product product, Store store) {
-        if(product == null || store == null) {
-            throw new IllegalArgumentException("args can not be null");
-        }
-        this.product = product;
-        this.store = store;
+  public StoreEventImpl(Product product, Store store) {
+    if (product == null || store == null) {
+      throw new IllegalArgumentException("args can not be null");
     }
+    this.product = product;
+    this.store = store;
+  }
 
   @Override
   public Product getProduct() {
@@ -26,7 +26,6 @@ public class StoreEventImpl implements StoreEvent {
   }
 
   public String getEventType() {
-        return "";
+    return "";
   }
-
 }

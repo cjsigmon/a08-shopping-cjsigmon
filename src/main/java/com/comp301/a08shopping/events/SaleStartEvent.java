@@ -7,6 +7,7 @@ public class SaleStartEvent extends StoreEventImpl {
   public SaleStartEvent(Product product, Store store) {
     super(product, store);
   }
+
   @Override
   public String getEventType() {
     return "SaleStartEvent";

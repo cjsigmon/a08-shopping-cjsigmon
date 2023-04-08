@@ -2,9 +2,9 @@ package com.comp301.a08shopping;
 
 import com.comp301.a08shopping.events.*;import com.comp301.a08shopping.exceptions.OutOfStockException;import com.comp301.a08shopping.exceptions.ProductNotFoundException;import java.util.ArrayList;import java.util.List;
 public class StoreImpl implements Store{
-    private String name;
-    private List<StoreObserver> observers;
-    private List<Product> products;
+    private final String name;
+    private final List<StoreObserver> observers;
+    private final List<Product> products;
     public StoreImpl(String name) {
         if (name == null) {
             throw new IllegalArgumentException();
@@ -135,7 +135,7 @@ public class StoreImpl implements Store{
         for (Product pr : products) {
             if (pr.equals(product)) {
                 fails = false;
-            }
+            break;}
         }
         if (fails) {
             throw new ProductNotFoundException();

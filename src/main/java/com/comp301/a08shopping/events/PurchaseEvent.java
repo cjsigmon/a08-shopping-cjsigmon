@@ -7,6 +7,7 @@ public class PurchaseEvent extends StoreEventImpl {
   public PurchaseEvent(Product product, Store store) {
     super(product, store);
   }
+
   @Override
   public String getEventType() {
     return "PurchaseEvent";

@@ -62,7 +62,7 @@ public class Main {
           break;
         case "register":
           for (Store str : stores) {
-              str.addObserver(customer);
+            str.addObserver(customer);
           }
           System.out.println(customer.getName() + " is now a registered sale observer.");
           break;
