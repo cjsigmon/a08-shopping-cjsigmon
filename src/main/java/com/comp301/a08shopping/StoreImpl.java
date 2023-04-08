@@ -52,11 +52,11 @@ public class StoreImpl implements Store{
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
 
+
         if (!((ProductImpl)product).getInStock()) {
             throw new OutOfStockException();
         }
         validateProduct(product);
-
 
 
         ReceiptItemImpl receipt = new ReceiptItemImpl(product.getName(), ((ProductImpl)product).getDiscountedPrice(), getName());
@@ -106,12 +106,7 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getInventory();
     }
     @Override public boolean getIsInStock(Product product) {
-        if (product == null) {
-            throw new IllegalArgumentException();
-        }
-        if (!(products.contains(product))) {
-            throw new ProductNotFoundException();
-        }
+        validateProduct(product);
         return ((ProductImpl)product).getInventory() > 0;
     }
     @Override public double getSalePrice(Product product) {
