@@ -26,6 +26,10 @@ public void setInventory(int amount) {
     inventory = inventory + amount;
 }
 
+public void remInventory() {
+        inventory--;
+}
+
 public int getInventory() {
         return inventory;
 }

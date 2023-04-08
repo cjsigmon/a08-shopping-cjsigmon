@@ -51,21 +51,19 @@ public class StoreImpl implements Store{
         return newProd;
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
-
+        validateProduct(product);
 
         if (!((ProductImpl)product).getInStock()) {
             throw new OutOfStockException();
         }
-        validateProduct(product);
 
 
-        ReceiptItemImpl receipt = new ReceiptItemImpl(product.getName(), ((ProductImpl)product).getDiscountedPrice(), getName());
-        ((ProductImpl) product).setInventory(-1);
+        ReceiptItem receipt = new ReceiptItemImpl(product.getName(), ((ProductImpl)product).getDiscountedPrice(), getName());
+        ((ProductImpl) product).remInventory();
         PurchaseEvent purchase = new PurchaseEvent(product, this);
         notify(purchase);
 
-        if (((ProductImpl)product).getInventory() == 0) {
-            products.remove(product);
+        if (!((ProductImpl)product).getInStock()) {
             OutOfStockEvent out = new OutOfStockEvent(product, this);
             notify(out);
         }
