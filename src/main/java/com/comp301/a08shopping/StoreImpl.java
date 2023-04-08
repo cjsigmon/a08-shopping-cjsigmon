@@ -3,10 +3,12 @@ package com.comp301.a08shopping;
 import com.comp301.a08shopping.events.*;import com.comp301.a08shopping.exceptions.OutOfStockException;import com.comp301.a08shopping.exceptions.ProductNotFoundException;import java.util.ArrayList;import java.util.List;
 public class StoreImpl implements Store{
     private String name;
-    private List<StoreObserver> observers = new ArrayList<>();
-    private List<Product> products = new ArrayList<>();
+    private List<StoreObserver> observers;
+    private List<Product> products;
     public StoreImpl(String name) {
         this.name = name;
+        observers = new ArrayList<>();
+        products = new ArrayList<>();
 
     }
     @Override
@@ -123,7 +125,7 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).hasDiscount();
     }
 
-    public void notify(StoreEventImpl storeEvent) {
+    private void notify(StoreEventImpl storeEvent) {
         for (StoreObserver looker : observers) {
             looker.update(storeEvent);
         }
