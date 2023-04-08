@@ -4,7 +4,7 @@ public class ProductImpl implements Product {
   private final String name;
   private final double basePrice;
   private int inventory = 0;
-  private double percentOff;
+  private double percentOff = 0.0;
 
   public ProductImpl(String name, double basePrice) {
     if (basePrice <= 0.00) {
