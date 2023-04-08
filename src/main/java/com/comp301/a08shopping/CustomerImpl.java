@@ -1,7 +1,9 @@
 package com.comp301.a08shopping;
 
 import com.comp301.a08shopping.events.StoreEvent;
-import com.comp301.a08shopping.events.StoreEventImpl;import com.comp301.a08shopping.exceptions.OutOfStockException;import com.comp301.a08shopping.exceptions.ProductNotFoundException;
+import com.comp301.a08shopping.events.StoreEventImpl;
+import com.comp301.a08shopping.exceptions.OutOfStockException;
+import com.comp301.a08shopping.exceptions.ProductNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +36,12 @@ public class CustomerImpl implements Customer {
     if (((ProductImpl) product).getDiscountedPrice() > budget) {
       throw new IllegalStateException();
     }
-    if (product == null || store == null) {
-      throw new IllegalArgumentException();
-    }
-    if (!((ProductImpl) product).getInStock()) {
-      throw new OutOfStockException();
-    }
-    if (!(store.getProducts().contains(product))) {
-      throw new ProductNotFoundException();
-    }
 
     budget -= ((ProductImpl) product).getDiscountedPrice();
 
-    purchaseHistory.add(store.purchaseProduct(product));
+    ReceiptItem receipt = store.purchaseProduct(product);
+
+    purchaseHistory.add(receipt);
   }
 
   @Override
