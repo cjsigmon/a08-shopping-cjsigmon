@@ -74,11 +74,12 @@ public class StoreImpl implements Store{
         if (numItems < 0) {
             throw new IllegalArgumentException();
         }
-        ((ProductImpl)product).setInventory(numItems);
         if (!getIsInStock(product)) {
             BackInStockEvent back = new BackInStockEvent(product, this);
             notify(back);
         }
+        ((ProductImpl)product).setInventory(numItems);
+
     }
     @Override public void startSale(Product product, double percentOff) {
         validateProduct(product);
