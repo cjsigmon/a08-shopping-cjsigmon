@@ -42,6 +42,9 @@ public class CustomerImpl implements Customer {
     if (store == null) {
       throw new IllegalArgumentException();
     }
+    if (!store.getProducts().contains(product)) {
+      throw new ProductNotFoundException();
+    }
 
     budget -= ((ProductImpl) product).getDiscountedPrice();
 
