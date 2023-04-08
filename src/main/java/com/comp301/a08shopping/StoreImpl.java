@@ -36,6 +36,7 @@ public class StoreImpl implements Store{
         }
         Product newProd = new ProductImpl(name, basePrice);
         ((ProductImpl)newProd).setInventory(inventory);
+        products.add(newProd);
         return newProd;
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
@@ -48,11 +49,17 @@ public class StoreImpl implements Store{
         if (((ProductImpl)product).getInventory() == 0) {
             throw new OutOfStockException();
         }
+
         ReceiptItemImpl receipt = new ReceiptItemImpl(product.getName(), ((ProductImpl)product).getDiscountedPrice(), getName());
         ((ProductImpl) product).setInventory(-1);
-
         PurchaseEvent purchase = new PurchaseEvent(product, this);
         notify(purchase);
+
+        if (((ProductImpl)product).getInventory() == 0) {
+            products.remove(product);
+            OutOfStockEvent out = new OutOfStockEvent(product, this);
+            notify(out);
+        }
 
         return receipt;
     }
