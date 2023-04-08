@@ -1,26 +1,28 @@
 package com.comp301.a08shopping;
 
 import com.comp301.a08shopping.events.StoreEvent;
-import java.util.List;
+import java.util.ArrayList;import java.util.List;
 
 public class CustomerImpl implements Customer{
     private String name;
     private double budget;
+    private List<ReceiptItem> purchaseHistory;
     public CustomerImpl(String name, double budget) {
         this.name = name;
         this.budget = budget;
+        this.purchaseHistory = new ArrayList<>();
     }
     @Override
     public String getName() {
-        return null;
+        return name;
     }
     @Override
     public double getBudget() {
-        return 0;
+        return budget;
     }
     @Override
     public void purchaseProduct(Product product, Store store) {
-
+        purchaseHistory.add(store.purchaseProduct(product));
     }
     @Override
     public List<ReceiptItem> getPurchaseHistory() {
