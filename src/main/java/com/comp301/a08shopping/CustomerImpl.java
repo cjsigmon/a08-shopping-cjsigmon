@@ -34,10 +34,10 @@ public class CustomerImpl implements Customer {
   @Override
   public void purchaseProduct(Product product, Store store) {
     if (product == null) {
-      throw new IllegalArgumentException();
+      throw new ProductNotFoundException();
     }
     if (((ProductImpl) product).getDiscountedPrice() > budget) {
-      throw new IllegalArgumentException();
+      throw new IllegalStateException();
     }
 
     budget -= ((ProductImpl) product).getDiscountedPrice();
