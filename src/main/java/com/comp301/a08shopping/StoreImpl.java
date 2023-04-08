@@ -110,6 +110,9 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getInventory();
     }
     @Override public boolean getIsInStock(Product product) {
+        if (!(products.contains(product))) {
+            throw new ProductNotFoundException();
+        }
         if (product == null) {
             throw new IllegalArgumentException();
         }
@@ -120,7 +123,12 @@ public class StoreImpl implements Store{
         return ((ProductImpl)product).getDiscountedPrice();
     }
     @Override public boolean getIsOnSale(Product product) {
-        validateProduct(product);
+        if (!(products.contains(product))) {
+            throw new ProductNotFoundException();
+        }
+        if (product == null) {
+            throw new IllegalArgumentException();
+        }
         return ((ProductImpl)product).hasDiscount();
     }
 
