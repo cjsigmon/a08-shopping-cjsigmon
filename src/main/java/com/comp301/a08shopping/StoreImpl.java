@@ -134,13 +134,13 @@ public class StoreImpl implements Store{
         if (product == null) {
             throw new IllegalArgumentException();
         }
-        boolean fails = true;
-        for (Product pr : products) {
-            if (pr.getName().equals(product.getName())) {
-                fails = false;
-            }
-        }
-        if (fails) {
+//        boolean fails = true;
+//        for (Product pr : products) {
+//            if (pr.getName().equals(product.getName())) {
+//                fails = false;
+//            }
+//        }
+        if (!(products.contains(product))) {
             throw new ProductNotFoundException();
         }
     }
