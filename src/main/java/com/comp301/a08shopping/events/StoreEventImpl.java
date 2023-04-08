@@ -25,4 +25,8 @@ public class StoreEventImpl implements StoreEvent {
     return store;
   }
 
+  public String getEventType() {
+        return "";
+  }
+
 }

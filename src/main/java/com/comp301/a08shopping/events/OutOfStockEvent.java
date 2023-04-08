@@ -7,4 +7,9 @@ public class OutOfStockEvent extends StoreEventImpl {
   public OutOfStockEvent(Product product, Store store) {
     super(product, store);
   }
+
+  @Override
+  public String getEventType() {
+    return "OutOfStockEvent";
+  }
 }

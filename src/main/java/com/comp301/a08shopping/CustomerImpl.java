@@ -1,6 +1,6 @@
 package com.comp301.a08shopping;
 
-import com.comp301.a08shopping.events.StoreEvent;
+import com.comp301.a08shopping.events.StoreEvent;import com.comp301.a08shopping.events.StoreEventImpl;
 import java.util.ArrayList;import java.util.List;
 
 public class CustomerImpl implements Customer{
@@ -8,6 +8,9 @@ public class CustomerImpl implements Customer{
     private double budget;
     private List<ReceiptItem> purchaseHistory;
     public CustomerImpl(String name, double budget) {
+        if (name == null || budget < 0.00) {
+            throw new IllegalArgumentException();
+        }
         this.name = name;
         this.budget = budget;
         this.purchaseHistory = new ArrayList<>();
@@ -22,16 +25,48 @@ public class CustomerImpl implements Customer{
     }
     @Override
     public void purchaseProduct(Product product, Store store) {
+        if (((ProductImpl)product).getDiscountedPrice() > budget) {
+            throw new IllegalStateException();
+        }
+        budget -= ((ProductImpl)product).getDiscountedPrice();
+
         purchaseHistory.add(store.purchaseProduct(product));
     }
     @Override
     public List<ReceiptItem> getPurchaseHistory() {
-        return null;
+        List<ReceiptItem> copy = new ArrayList<>();
+        for (ReceiptItem receipt : purchaseHistory) {
+            copy.add(receipt);
+        }
+        return copy;
     }
 
     @Override
     public void update(StoreEvent event) {
+        switch (((StoreEventImpl)event).getEventType()) {
+            case "BackInStockEvent":
+                System.out.println(event.getProduct().getName() + " is back in stock at "
+                        + event.getStore().getName());
+                break;
 
+            case "OutOfStockEvent":
+                System.out.println(event.getProduct().getName() + " is now of stock at "
+                        + event.getStore().getName());
+                break;
+            case "PurchaseEvent":
+                System.out.println("Someone purchased " + event.getProduct().getName() + " at "
+                        + event.getStore().getName());
+                break;
+
+            case "SaleEndEvent":
+                System.out.println("The sale for " + event.getProduct().getName() + " at "
+                        + event.getStore().getName() + " has ended");
+                break;
+            case "SaleStartEvent":
+                System.out.println("New sale for " + event.getProduct().getName() + " at "
+                        + event.getStore().getName());
+                break;
+        }
     }
 
 

@@ -7,4 +7,9 @@ public class BackInStockEvent extends StoreEventImpl {
   public BackInStockEvent(Product product, Store store) {
     super(product, store);
   }
+
+  @Override
+  public String getEventType() {
+    return "BackInStockEvent";
+  }
 }

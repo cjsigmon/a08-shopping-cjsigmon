@@ -61,16 +61,18 @@ public class Main {
           System.out.println("\tquit - Exit the game");
           break;
         case "register":
-          // TODO: Loop through each store in the "stores" list. For each store, call
-          // store.addObserver(customer) to add the customer as an active observer
+          for (Store str : stores) {
+              str.addObserver(customer);
+          }
           System.out.println(customer.getName() + " is now a registered sale observer.");
           break;
         case "purchase":
           makePurchase(stores, customer);
           break;
         case "deregister":
-          // TODO: Loop through each store in the "stores" list. For each store, call
-          // store.removeObserver(customer) to remove the customer as an active observer
+          for (Store str : stores) {
+            str.removeObserver(customer);
+          }
           System.out.println(customer.getName() + " is no longer a registered sale observer.");
           break;
         case "bags":

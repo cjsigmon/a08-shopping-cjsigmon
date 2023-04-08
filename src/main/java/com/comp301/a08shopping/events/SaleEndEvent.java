@@ -7,4 +7,8 @@ public class SaleEndEvent extends StoreEventImpl {
   public SaleEndEvent(Product product, Store store) {
     super(product, store);
   }
+  @Override
+  public String getEventType() {
+    return "SaleEndEvent";
+  }
 }
