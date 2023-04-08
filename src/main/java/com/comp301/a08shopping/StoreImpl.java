@@ -52,6 +52,9 @@ public class StoreImpl implements Store{
     }
     @Override public ReceiptItem purchaseProduct(Product product) {
 
+        if (product == null) {
+            throw new IllegalArgumentException();
+        }
         if (((ProductImpl)product).getInStock()) {
             throw new OutOfStockException();
         }
