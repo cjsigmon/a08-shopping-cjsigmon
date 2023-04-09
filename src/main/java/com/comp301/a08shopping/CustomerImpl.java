@@ -37,14 +37,15 @@ public class CustomerImpl implements Customer {
       throw new IllegalArgumentException();
     }
     try{
-      ProductImpl myProd = (ProductImpl)product;
-
-    }catch (Exception e) {
+      if (((ProductImpl) product).getDiscountedPrice() > budget) {
+        throw new IllegalStateException();
+      }
+    }catch (ClassCastException e) {
       throw new IllegalArgumentException();
     }
 
-    if (((ProductImpl) product).getDiscountedPrice() > budget) {
-      throw new IllegalStateException();
+    if (store == null) {
+      throw new IllegalArgumentException();
     }
 
     ReceiptItem receipt = store.purchaseProduct(product);
