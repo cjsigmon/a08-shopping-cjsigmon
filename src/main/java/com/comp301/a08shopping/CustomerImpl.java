@@ -33,23 +33,16 @@ public class CustomerImpl implements Customer {
 
   @Override
   public void purchaseProduct(Product product, Store store) {
-    if (product == null) {
-      throw new IllegalArgumentException();
-    }
-    try{
-      if (((ProductImpl) product).getDiscountedPrice() > budget) {
-        throw new IllegalStateException();
-      }
-    }catch (ClassCastException e) {
-      throw new IllegalArgumentException();
-    }
-
     if (store == null) {
       throw new IllegalArgumentException();
     }
+    if (store.getSalePrice(product) > budget) {
+      throw new IllegalStateException();
+    }
+
+    budget -= store.getSalePrice(product);
 
     ReceiptItem receipt = store.purchaseProduct(product);
-    budget -= ((ProductImpl) product).getDiscountedPrice();
 
     purchaseHistory.add(receipt);
   }
